@@ -20,9 +20,8 @@
 
 ## 目录结构
 
-CppHttpFileServer/
-
-├── CMakeLists.txt        # cmake构建配置文件
+```
+CppHttpFileServer/├── CMakeLists.txt        # cmake构建配置文件
 ├── README.md             # 项目说明文档
 ├── .gitignore            # 忽略文件配置
 ├── include/              # 存放公共头文件
@@ -34,6 +33,7 @@ CppHttpFileServer/
 │   └── server.conf       # 服务器配置文件（预留）
 └── test/                 # 单元测试或测试代码
     └── test_main.cpp     # 测试入口
+```
 
 
 

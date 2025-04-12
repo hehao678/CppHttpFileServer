@@ -8,7 +8,10 @@
 #include <iostream>
 #include <sstream>
 
-HttpServer::HttpServer(const std::string &ip, int port) : server_ip(ip), server_port(port), server_fd(-1) {}
+HttpServer::HttpServer(const std::string &ip, int port)
+    : server_ip(ip), server_port(port), server_fd(-1), fileManager_("./files/")
+{
+}
 
 HttpServer::~HttpServer()
 {
@@ -100,12 +103,46 @@ void HttpServer::parseRequest(int client_fd, std::string &method, std::string &p
 
 void HttpServer::handleGet(int client_fd, const std::string &path)
 {
-    std::string response = "HTTP/1.1 200 OK\r\n\r\nGET request received: " + path;
-    send(client_fd, response.c_str(), response.size(), 0);
+    std::string fileContent;
+    if (fileManager_.readFile(path, fileContent))
+    {
+        std::ostringstream response;
+        response << "HTTP/1.1 200 OK\r\n"
+                 << "Content-Length: " << fileContent.size() << "\r\n"
+                 << "Content-Type: text/plain\r\n\r\n"
+                 << fileContent;
+        send(client_fd, response.str().c_str(), response.str().size(), 0);
+    }
+    else
+    {
+        std::string response = "HTTP/1.1 404 Not Found\r\n\r\nFile Not Found";
+        send(client_fd, response.c_str(), response.size(), 0);
+    }
 }
 
 void HttpServer::handlePost(int client_fd, const std::string &path)
 {
-    std::string response = "HTTP/1.1 200 OK\r\n\r\nPOST request received: " + path;
-    send(client_fd, response.c_str(), response.size(), 0);
+    char buffer[4096] = {0};
+
+    int len = recv(client_fd, buffer, sizeof(buffer), 0);
+
+    if (len <= 0)
+    {
+        std::string response = "HTTP/1.1 400 Bad Request\r\n\r\nInvalid Data";
+        send(client_fd, response.c_str(), response.size(), 0);
+        return;
+    }
+
+    std::string content(buffer, len);
+
+    if (fileManager_.writeFile(path, content))
+    {
+        std::string response = "HTTP/1.1 200 OK\r\n\r\nFile Uploaded Successfully";
+        send(client_fd, response.c_str(), response.size(), 0);
+    }
+    else
+    {
+        std::string response = "HTTP/1.1 500 Internal Server Error\r\n\r\nUpload Failed";
+        send(client_fd, response.c_str(), response.size(), 0);
+    }
 }

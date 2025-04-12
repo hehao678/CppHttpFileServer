@@ -1,6 +1,9 @@
 #ifndef HTTP_SERVER_H
 #define HTTP_SERVER_H
 #include <string>
+
+#include "file_manager.h"
+
 class HttpServer
 {
   public:
@@ -14,6 +17,8 @@ class HttpServer
     int         server_fd;   //监听socket文件描述符
     std::string server_ip;   //服务器ip
     int         server_port; //服务器端口
+
+    FileManager fileManager_; //文件管理模块实例
 
     // 处理客户端请求的入口
     void handleClient(int client_fd);

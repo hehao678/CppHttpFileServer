@@ -79,9 +79,63 @@ xxxxxx
 * *路径安全检查* （Path Security Check）逻辑
 * 
 
-
 ### 路径安全检查
 
 一般文件的读取：readFile(const std::string& relativePath)
 
-因该先检查一下
+因该先检查一下传入的 `relativePath` 是否包含了 `..`
+
+```
+/path/to/wwwroot/file.txt         # 正常路径
+/path/to/wwwroot/../../etc/passwd # 目录穿越攻击
+```
+
+**代码说明**
+
+```cpp
+// 判断路径中是否存在 ".."
+if (relativePath.find("..") != std::string::npos)
+```
+
+说明：
+
+* `std::string::find` 用于查找子串。
+* 返回值：
+  * 找到 -> 返回位置（>= 0）
+  * 没找到 -> 返回 `std::string::npos`
+
+### 建议优化（更安全做法）
+
+目前这段代码是基础的路径检查。更完善的做法可以是：
+
+#### 1. 检查绝对路径
+
+拼接出完整路径后，检查是否在指定根目录：
+
+```cpp
+std::filesystem::path fullPath = basePath / relativePath;
+fullPath = std::filesystem::weakly_canonical(fullPath);
+
+if (fullPath.string().find(basePath.string()) != 0)
+{
+    LOG_WARNING("Path escapes base directory.");
+    return false;
+}
+```
+
+#### 2. 正则限制路径字符
+
+只允许字母、数字、下划线、斜杠等安全字符。
+
+
+
+
+
+## 线程池相关问题
+
+* 添加任务到线程池的函数原理：`voidaddTask(conststd::function<void()> &task);`
+* 线程池的创建: `workers_.emplace_back(`
+* 线程池的析构函数代码理解
+* 线程池中addTask()原理理解
+* notify_one()和notify_all()原理以及区别
+*

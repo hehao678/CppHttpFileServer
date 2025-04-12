@@ -69,6 +69,24 @@ private:
 
 ## readFile设计流程图
 
+```
+readFile(relativePath, fileContent)
+│
+├── 路径合法性检查（防止目录穿越）
+│   └── 有问题 -> 返回 false
+│
+├── 拼接完整路径 fullPath
+│
+├── 尝试打开文件
+│   └── 打不开 -> Warning日志 + 返回 false
+│
+├── 读取文件内容到 fileContent
+│
+├── 打印读取成功日志
+│
+└── 返回 true
+```
+
 
 ## 文件路径规划
 

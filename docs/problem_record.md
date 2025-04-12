@@ -1,5 +1,3 @@
-
-
 ## 代码核心逻辑梳理
 
 | 代码位置                   | 功能                   | 知识点                                      |
@@ -13,13 +11,11 @@
 | parseRequest()             | 简单的 HTTP 请求解析   | HTTP 协议结构：请求行、请求头、空行、请求体 |
 | handleGet() / handlePost() | 请求类型处理           | 请求方法分发（GET / POST）                  |
 
-
 ### 1. socket 编程的基本流程？
 
 ```text
 socket() -> bind() -> listen() -> accept() -> recv()/send() -> close()
 ```
-
 
 ### 2. TCP 和 UDP 区别？
 
@@ -28,7 +24,6 @@ socket() -> bind() -> listen() -> accept() -> recv()/send() -> close()
 | 面向连接（三次握手）     | 无连接       |
 | 可靠传输（顺序、无丢包） | 不保证可靠   |
 | 慢                       | 快（无状态） |
-
 
 ### 3. TCP 粘包 / 拆包问题是什么？
 
@@ -41,8 +36,6 @@ socket() -> bind() -> listen() -> accept() -> recv()/send() -> close()
 
 * HTTP 协议通过 Content-Length 明确消息长度
 * 自定义协议中通过定长包头、特殊分隔符、长度字段来拆包
-
-
 
 ### 4.HTTP 协议的基本格式？
 
@@ -60,7 +53,6 @@ Content-Length: xxx
 xxxxxx
 ```
 
-
 ### 6. 面试官可能会深入的问题
 
 | 问题                         | 知识考察点                       |
@@ -76,8 +68,20 @@ xxxxxx
 * 便于模块化设计
 * 易于后续扩展（如支持 HTTPS / RESTful API）
 
-
 ## HTTPServer相关问题记录
 
 * http协议的主要组成是什么样的？
 * 是如何获取http协议相关的内容的？
+
+## FileManager相关问题记录
+
+* explicit关键字的作用是什么？？
+* *路径安全检查* （Path Security Check）逻辑
+* 
+
+
+### 路径安全检查
+
+一般文件的读取：readFile(const std::string& relativePath)
+
+因该先检查一下

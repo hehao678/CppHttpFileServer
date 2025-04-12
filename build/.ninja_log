@@ -1,0 +1,6 @@
+# ninja log v5
+1	8	1744342075310123113	CMakeFiles/CppHttpFileServer.dir/src/main.cpp.o	d88869c35e2a0050
+0	8	1744342075310123113	CMakeFiles/CppHttpFileServer.dir/src/file_manager.cpp.o	d385be41e07f140b
+0	7	1744342075310123113	CMakeFiles/CppHttpFileServer.dir/src/http_server.cpp.o	e5d5663755847912
+1	8	1744342075310123113	CMakeFiles/CppHttpFileServer.dir/src/thread_pool.cpp.o	ec7bcf5589d24b9
+0	8	1744356019030616492	CMakeFiles/CppHttpFileServer.dir/src/log.cpp.o	28fe7b978cffb132

@@ -1,0 +1,17 @@
+{
+    // 禁用微软官方的补全
+    "C_Cpp.intelliSenseEngine": "disabled",
+    // clangd 使用编译数据库
+    "clangd.arguments": [
+        "--compile-commands-dir=build",
+        "--header-insertion=never"
+    ],
+    "C_Cpp.default.compileCommands": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build/compile_commands.json",
+    // 格式化风格
+    "C_Cpp.clang_format_style": "file",
+    // 保存自动格式化
+    "editor.formatOnSave": true,
+    // 缩进配置
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true
+}

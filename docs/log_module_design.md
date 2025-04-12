@@ -27,12 +27,7 @@
 | WARNING  | 警告日志 | 存在潜在问题，但不影响程序运行 |
 | ERROR    | 错误日志 | 严重错误，程序需要注意或退出   |
 
-
-
 ---
-
-
-
 
 ## 日志输出要求
 
@@ -40,22 +35,17 @@
 
 - 格式：[等级] 时间 [文件名:行号] 日志内容
 
-
 ### 2. 日志文件输出
 
 - 默认路径：./logs/server.log
 - 自动创建 logs/ 目录
 - 同步输出到控制台和日志文件
 
-
-
-
 ### 带变量日志（推荐写法）
 
 采用 `std::ostringstream` 进行日志字符串拼接：
 
 cpp
-
 
 ```
 #include <sstream>
@@ -69,7 +59,6 @@ LOG_INFO(oss.str());
 
 ```
 
-
 ## 不推荐的写法（不支持）
 
 日志模块不支持类似 printf 格式：
@@ -81,9 +70,6 @@ LOG_INFO(oss.str());
 `LOG_INFO(std::format("userId = {}, username = {}", userId, username)); // 不建议`
 
 ---
-
-
-
 
 ## 日志模块核心接口设计
 
@@ -109,7 +95,6 @@ LOG_INFO(oss.str());
 #define LOG_ERROR(msg) Logger::getInstance().log(LogLevel::ERROR, msg, __FILE__, __LINE__)
 ```
 
-
 ## 模块优点
 
 * 易用性好，接口友好
@@ -128,3 +113,37 @@ LOG_INFO(oss.str());
 | 异步日志     | 使用异步队列提高性能        |
 | 多日志文件   | 不同模块单独记录日志        |
 | 日志颜色高亮 | 控制台日志颜色区分日志等级  |
+
+
+
+## 代码说明
+
+
+### 单例模块设计
+
+
+```
+Logger(constLogger&) =delete;  
+Logger&operator=(constLogger&) =delete;
+```
+
+这两行代码的作用是： 	禁止对象的拷贝和赋值。
+
+因为日志模块的设计是 单例模式（Singleton Pattern）
+
+#### 单例模式的核心思想：
+
+* 一个类在整个程序生命周期中，只能有一个实例。
+* 不能被随意复制或者赋值，否则就破坏了单例的约束。
+
+#### 扩展知识点
+
+这种写法是 C++11 引入的新特性：
+
+> = delete
+
+代表：
+
+* 告诉编译器禁止这类函数的调用
+* 明确禁止拷贝 / 赋值
+* 比以前的 private 声明更直接和规范

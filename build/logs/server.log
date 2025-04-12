@@ -1,0 +1,4 @@
+[DEBUG] 2025-04-11 15:43:06 [/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp:9] This is a debug log.
+[INFO] 2025-04-11 15:43:06 [/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp:10] This is an info log.
+[WARNING] 2025-04-11 15:43:06 [/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp:11] This is a warning log.
+[ERROR] 2025-04-11 15:43:06 [/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp:12] This is an error log.

@@ -127,10 +127,6 @@ if (fullPath.string().find(basePath.string()) != 0)
 
 只允许字母、数字、下划线、斜杠等安全字符。
 
-
-
-
-
 ## 线程池相关问题
 
 * 添加任务到线程池的函数原理：`voidaddTask(conststd::function<void()> &task);`
@@ -138,4 +134,11 @@ if (fullPath.string().find(basePath.string()) != 0)
 * 线程池的析构函数代码理解
 * 线程池中addTask()原理理解
 * notify_one()和notify_all()原理以及区别
+* 
+
+
+## git操作相关问题
+
+* 如何将不同的版本创建不同的分支？
+* 如何使用SSH key登录github?使用git push经常出现403 error
 *

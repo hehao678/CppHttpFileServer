@@ -7,9 +7,10 @@
 #include <cstring>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 HttpServer::HttpServer(const std::string &ip, int port)
-    : server_ip(ip), server_port(port), server_fd(-1), fileManager_("./files/")
+    : server_fd(-1), server_ip(ip), server_port(port), fileManager_("./files/")
 {
 }
 
@@ -24,7 +25,7 @@ HttpServer::~HttpServer()
 void HttpServer::start()
 {
     // 创建套接字;基于TCP
-    server_fd = socket(AF_INET, SOCK_DGRAM, 0);
+    server_fd = socket(AF_INET, SOCK_STREAM, 0);
     if (server_fd == -1)
     {
         LOG_ERROR("Failed to create socket!");
@@ -40,6 +41,7 @@ void HttpServer::start()
         LOG_ERROR("Bind error!");
         return;
     }
+    LOG_DEBUG("Bind success!");
     // 监听
     if (listen(server_fd, 10) < 0)
     {
@@ -71,7 +73,10 @@ void HttpServer::start()
 void HttpServer::handleClient(int client_fd)
 {
     std::string method, path;
-    parseRequest(client_fd, method, path);
+    int         contentLength = 0;
+    std::string bodyData;
+
+    parseRequest(client_fd, method, path, contentLength, bodyData);
 
     if (method == "GET")
     {
@@ -79,31 +84,59 @@ void HttpServer::handleClient(int client_fd)
     }
     else if (method == "POST")
     {
-        handlePost(client_fd, path);
-    }
-    else
-    {
-        std::string response = "HTTP/1.1 400 Bad Request\r\n\r\nUnsupported Method";
-        send(client_fd, response.c_str(), response.size(), 0);
+        handlePost(client_fd, path, contentLength, bodyData);
     }
 }
 
-void HttpServer::parseRequest(int client_fd, std::string &method, std::string &path)
+void HttpServer::parseRequest(
+    int client_fd, std::string &method, std::string &path, int &contentLength, std::string &bodyData)
 {
-    char buffer[1024] = {0};
-    recv(client_fd, buffer, sizeof(buffer), 0);
+    std::string request_data;
+    char        buffer[1024] = {0};
 
-    std::istringstream iss(buffer);
+    while (true)
+    {
+        int len = recv(client_fd, buffer, sizeof(buffer), 0);
+        if (len < 0)
+        {
+            LOG_WARNING("Recv error when parsing request.");
+            return;
+        }
+        request_data.append(buffer, len);
+
+        if (request_data.find("\r\n\r\n") != std::string::npos)
+        {
+            break;
+        }
+    }
+
+    std::istringstream iss(request_data);
     iss >> method >> path;
 
+    contentLength = 0;
+    size_t pos    = request_data.find("Content-Length:");
+    if (pos != std::string::npos)
+    {
+        size_t      end_pos = request_data.find("\r\n", pos);
+        std::string len_str = request_data.substr(pos + 15, end_pos - pos - 15);
+        contentLength       = std::stoi(len_str);
+    }
+
+    size_t body_pos = request_data.find("\r\n\r\n");
+    if (body_pos != std::string::npos)
+    {
+        bodyData = request_data.substr(body_pos + 4);
+    }
+
     std::ostringstream oss;
-    oss << "Request Method: " << method << ",Path: " << path;
+    oss << "Request Method: " << method << ",Path: " << path << ",Content-Length: " << contentLength;
     LOG_INFO(oss.str());
 }
 
 void HttpServer::handleGet(int client_fd, const std::string &path)
 {
     std::string fileContent;
+
     if (fileManager_.readFile(path, fileContent))
     {
         std::ostringstream response;
@@ -120,20 +153,29 @@ void HttpServer::handleGet(int client_fd, const std::string &path)
     }
 }
 
-void HttpServer::handlePost(int client_fd, const std::string &path)
+void HttpServer::handlePost(int client_fd, const std::string &path, int contentLength, const std::string &bodyData)
 {
-    char buffer[4096] = {0};
+    std::ostringstream oss;
+    char               buffer[4096] = {0};
 
-    int len = recv(client_fd, buffer, sizeof(buffer), 0);
+    int received = bodyData.size();
+    oss.write(bodyData.c_str(), bodyData.size());
 
-    if (len <= 0)
+    while (received < contentLength)
     {
-        std::string response = "HTTP/1.1 400 Bad Request\r\n\r\nInvalid Data";
-        send(client_fd, response.c_str(), response.size(), 0);
-        return;
+        // int len = recv(client_fd, buffer, std::min(sizeof(buffer), contentLength - received), 0);
+        int len = recv(client_fd, buffer, std::min((size_t) sizeof(buffer), (size_t)(contentLength - received)), 0);
+
+        if (len < 0)
+        {
+            LOG_WARNING("Recv error when uploading file.");
+            return;
+        }
+        received += len;
+        oss.write(buffer, len);
     }
 
-    std::string content(buffer, len);
+    std::string content = oss.str();
 
     if (fileManager_.writeFile(path, content))
     {

@@ -33,6 +33,8 @@ void Logger::setLogFile(const std::string &filename)
 
 void Logger::log(LogLevel level, const std::string &message, const char *file, int line)
 {
+    // 在参数名前加上 (void) 告诉编译器我就是不用这个参数
+    (void) file;
     if (level < currentLevel)
     {
         return;
@@ -42,7 +44,7 @@ void Logger::log(LogLevel level, const std::string &message, const char *file, i
 
     std::string timeStr  = getCurrentTime();
     std::string levelStr = logLevelToString(level);
-    std::string logMsg   = timeStr + " " + levelStr + " " + message + " Line:" + std::to_string(line);
+    std::string logMsg   = timeStr + " " + levelStr + " " + message + " [" + file + ":" + std::to_string(line) + "] ";
 
     std::cout << logMsg << std::endl;
     if (logFile.is_open())

@@ -136,9 +136,52 @@ if (fullPath.string().find(basePath.string()) != 0)
 * notify_one()和notify_all()原理以及区别
 * 
 
-
 ## git操作相关问题
 
 * 如何将不同的版本创建不同的分支？
 * 如何使用SSH key登录github?使用git push经常出现403 error
-*
+* 
+
+
+
+
+## 第一版测试问题
+
+curl 上传时一直卡住、不返回、不报错，原因非常明确：
+
+### 问题本质
+
+你的 HttpServer 没有正确读取完整的 HTTP 请求 Body 数据（文件内容），导致：
+
+* 客户端（curl）在等待服务器继续接收数据；
+* 服务器（你的 handlePost 函数）执行完一次 recv 后直接 return 或处理数据；
+* TCP 连接还没断，curl 以为服务器没接收完，继续等待写入窗口；
+
+
+### 当前代码
+
+```cpp
+int len = recv(client_fd, buffer, sizeof(buffer), 0);
+
+if (len <= 0)
+{
+    // 错误处理
+}
+
+std::string content(buffer, len);
+
+// 直接写入文件
+fileManager_.writeFile(path, content);
+```
+
+
+问题：只读了一次 recv，但 curl 发送的文件数据远远超过了 buffer 的大小（4096），剩余数据还在传输过程中。
+
+而你提前返回并发了 HTTP 200 响应，curl 发现 TCP 连接没断，也没收到完整的 response，就一直卡住等待。
+
+### 正确的处理方式
+
+必须：
+
+1. 解析 Content-Length（推荐）
+2. 或者 不断循环 recv，直到 recv 返回 0（客户端关闭连接）

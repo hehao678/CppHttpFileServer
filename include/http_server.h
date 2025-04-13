@@ -24,11 +24,16 @@ class HttpServer
     void handleClient(int client_fd);
 
     // 简单的HTTP请求协议（只解析方法和路径）
-    void parseRequest(int client_fd, std::string &method, std::string &path);
+    // void parseRequest(int client_fd, std::string &method, std::string &path);
+    // void parseRequest(int client_fd, std::string &method, std::string &path, int &contentLength);
+    void parseRequest(int client_fd, std::string &method, std::string &path, int &contentLength, std::string &bodyData);
+
     //处理GET请求
     void handleGet(int client_fd, const std::string &path);
     // 处理POST请求
-    void handlePost(int client_fd, const std::string &path);
+    // void handlePost(int client_fd, const std::string &path);
+    // void handlePost(int client_fd, const std::string &path, int contentLength
+    void handlePost(int client_fd, const std::string &path, int contentLength, const std::string &bodyData);
 };
 
 #endif // HTTP_SERVER_H

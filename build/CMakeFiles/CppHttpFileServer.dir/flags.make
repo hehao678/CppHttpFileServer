@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include
 
-CXX_FLAGS = -std=gnu++1z
+CXX_FLAGS = -std=gnu++1z -Wall -Wextra -Werror
 

@@ -11,6 +11,8 @@
 		"commands" : 
 		[
 			"add_executable",
+			"target_link_libraries",
+			"add_compile_options",
 			"include_directories"
 		],
 		"files" : 
@@ -25,13 +27,25 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 25,
+				"line" : 37,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
+				"line" : 40,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
 				"line" : 17,
+				"parent" : 0
+			},
+			{
+				"command" : 3,
+				"file" : 0,
+				"line" : 24,
 				"parent" : 0
 			}
 		]
@@ -42,13 +56,25 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++17"
+					"fragment" : "-std=gnu++1z"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wall"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Wextra"
+				},
+				{
+					"backtrace" : 3,
+					"fragment" : "-Werror"
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 2,
+					"backtrace" : 4,
 					"path" : "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include"
 				}
 			],
@@ -77,12 +103,13 @@
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-g",
+				"fragment" : "",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "",
-				"role" : "flags"
+				"backtrace" : 2,
+				"fragment" : "-lpthread",
+				"role" : "libraries"
 			}
 		],
 		"language" : "CXX"

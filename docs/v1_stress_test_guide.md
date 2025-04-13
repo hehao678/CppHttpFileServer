@@ -144,6 +144,14 @@ wrk.headers["Content-Type"] = "text/plain"
 | 性能指标     | Requests/sec 符合预期（根据机器性能） |
 | 日志记录     | 正确记录每个请求的日志                |
 
+
+
+模拟测试结果输出
+
+
+
+
+
 ---
 
 ## 7. 测试注意事项

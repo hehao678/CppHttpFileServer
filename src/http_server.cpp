@@ -10,7 +10,7 @@
 #include <algorithm>
 
 HttpServer::HttpServer(const std::string &ip, int port)
-    : server_fd(-1), server_ip(ip), server_port(port), fileManager_("./files/")
+    : server_fd(-1), server_ip(ip), server_port(port), fileManager_("./files/"), threadPool_(4)
 {
 }
 
@@ -35,6 +35,7 @@ void HttpServer::start()
     server_addr.sin_family      = AF_INET;
     server_addr.sin_port        = htons(server_port);
     server_addr.sin_addr.s_addr = inet_addr(server_ip.c_str());
+
     // 绑定
     if (bind(server_fd, (sockaddr *) &server_addr, sizeof(server_addr)) < 0)
     {
@@ -42,6 +43,7 @@ void HttpServer::start()
         return;
     }
     LOG_DEBUG("Bind success!");
+
     // 监听
     if (listen(server_fd, 10) < 0)
     {
@@ -65,8 +67,14 @@ void HttpServer::start()
             continue;
         }
 
-        handleClient(client_fd);
-        close(client_fd);
+        // 加入线程池
+        threadPool_.addTask([this, client_fd]() {
+            handleClient(client_fd);
+            close(client_fd);
+        });
+
+        // handleClient(client_fd);
+        // close(client_fd);
     }
 }
 

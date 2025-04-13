@@ -3,6 +3,7 @@
 #include <string>
 
 #include "file_manager.h"
+#include "thread_pool.h"
 
 class HttpServer
 {
@@ -19,20 +20,18 @@ class HttpServer
     int         server_port; //服务器端口
 
     FileManager fileManager_; //文件管理模块实例
+    ThreadPool  threadPool_;  //线程池管理实例
 
     // 处理客户端请求的入口
     void handleClient(int client_fd);
 
     // 简单的HTTP请求协议（只解析方法和路径）
-    // void parseRequest(int client_fd, std::string &method, std::string &path);
-    // void parseRequest(int client_fd, std::string &method, std::string &path, int &contentLength);
     void parseRequest(int client_fd, std::string &method, std::string &path, int &contentLength, std::string &bodyData);
 
     //处理GET请求
     void handleGet(int client_fd, const std::string &path);
+
     // 处理POST请求
-    // void handlePost(int client_fd, const std::string &path);
-    // void handlePost(int client_fd, const std::string &path, int contentLength
     void handlePost(int client_fd, const std::string &path, int contentLength, const std::string &bodyData);
 };
 

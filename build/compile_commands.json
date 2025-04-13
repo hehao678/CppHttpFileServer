@@ -1,31 +1,31 @@
 [
 {
   "directory": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build",
-  "command": "/usr/bin/g++-9  -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -std=gnu++1z -o CMakeFiles/CppHttpFileServer.dir/src/file_manager.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/file_manager.cpp",
+  "command": "/usr/bin/g++-9 -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -g -std=gnu++17 -o CMakeFiles/CppHttpFileServer.dir/src/file_manager.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/file_manager.cpp",
   "file": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/file_manager.cpp",
   "output": "CMakeFiles/CppHttpFileServer.dir/src/file_manager.cpp.o"
 },
 {
   "directory": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build",
-  "command": "/usr/bin/g++-9  -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -std=gnu++1z -o CMakeFiles/CppHttpFileServer.dir/src/http_server.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/http_server.cpp",
+  "command": "/usr/bin/g++-9 -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -g -std=gnu++17 -o CMakeFiles/CppHttpFileServer.dir/src/http_server.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/http_server.cpp",
   "file": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/http_server.cpp",
   "output": "CMakeFiles/CppHttpFileServer.dir/src/http_server.cpp.o"
 },
 {
   "directory": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build",
-  "command": "/usr/bin/g++-9  -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -std=gnu++1z -o CMakeFiles/CppHttpFileServer.dir/src/log.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/log.cpp",
+  "command": "/usr/bin/g++-9 -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -g -std=gnu++17 -o CMakeFiles/CppHttpFileServer.dir/src/log.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/log.cpp",
   "file": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/log.cpp",
   "output": "CMakeFiles/CppHttpFileServer.dir/src/log.cpp.o"
 },
 {
   "directory": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build",
-  "command": "/usr/bin/g++-9  -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -std=gnu++1z -o CMakeFiles/CppHttpFileServer.dir/src/main.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp",
+  "command": "/usr/bin/g++-9 -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -g -std=gnu++17 -o CMakeFiles/CppHttpFileServer.dir/src/main.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp",
   "file": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/main.cpp",
   "output": "CMakeFiles/CppHttpFileServer.dir/src/main.cpp.o"
 },
 {
   "directory": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/build",
-  "command": "/usr/bin/g++-9  -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -std=gnu++1z -o CMakeFiles/CppHttpFileServer.dir/src/thread_pool.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/thread_pool.cpp",
+  "command": "/usr/bin/g++-9 -I/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/include -g -std=gnu++17 -o CMakeFiles/CppHttpFileServer.dir/src/thread_pool.cpp.o -c /mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/thread_pool.cpp",
   "file": "/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/src/thread_pool.cpp",
   "output": "CMakeFiles/CppHttpFileServer.dir/src/thread_pool.cpp.o"
 }

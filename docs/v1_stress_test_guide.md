@@ -148,6 +148,18 @@ wrk.headers["Content-Type"] = "text/plain"
 
 模拟测试结果输出
 
+```bash
+(base) ubuntu@ubuntu:/mnt/sdb/hh/hhe_cpp/Prj/CppHttpFileServer/test$ wrk -t4 -c100 -d10s http://127.0.0.1:8080/test.txt
+Running 10s test @ http://127.0.0.1:8080/test.txt
+  4 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    23.91ms   25.49ms 102.79ms   80.64%
+    Req/Sec     1.38k   484.11     3.43k    70.25%
+  54953 requests in 10.01s, 4.30MB read
+  Socket errors: connect 0, read 54952, write 0, timeout 0
+Requests/sec:   5489.46
+Transfer/sec:    439.59KB
+```
 
 
 
